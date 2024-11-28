@@ -26,17 +26,17 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
         cache: 'maven'
 
-    - name: Build with Maven
-      run: mvn -U -B -T 1C clean package  -Dmaven.test.skip=true -Dmaven.compile.fork=true --file pom.xml
-
     - name: Prepare artifacts
       run: |
         sudo timedatectl set-timezone Asia/Shanghai
         timedatectl status
         echo "BUILD_VERSION_TIMESTAMP=$(date '+%Y.%m.%d_%H.%M.%S')" >> $GITHUB_ENV
+
+    - name: Build with Maven
+      run: mvn -U -B -T 1C clean package  -Dmaven.test.skip=true -Dmaven.compile.fork=true --file pom.xml
         
-    - name: Archive artifacts for x64 / Release
-      if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
+    - name: Archive artifacts for jar
+      if: true
       uses: actions/upload-artifact@v4
       with:
           name: maven-resolver-ant-tasks-uber.indiff.${{ env.BUILD_VERSION_TIMESTAMP }}
