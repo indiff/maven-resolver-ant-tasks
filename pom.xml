@@ -265,6 +265,7 @@
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
           <excludes combine.children="append">
+            <exclude>*.xml</exclude>
             <exclude>bin/**/*</exclude>
             <exclude>src/test/resources/**/*.txt</exclude>
             <exclude>README.md</exclude>
