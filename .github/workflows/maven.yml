@@ -43,7 +43,7 @@ jobs:
           retention-days: 7 # 保留期 
           compression-level: 9 # 压缩级别
           path: |
-            target\*.jar
+            ./target/*.jar
 
     - name: Check Version with Maven
       run: mvn -U -B -T 1C versions:display-dependency-updates "-Dmaven.version.ignore=.*android.*" -Dmaven.test.skip=true -Dmaven.compile.fork=true --file pom.xml
