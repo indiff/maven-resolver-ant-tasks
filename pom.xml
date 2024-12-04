@@ -65,7 +65,7 @@
     <hamcrestVersion>3.0</hamcrestVersion>
     <maven.site.path>resolver-archives/resolver-ant-tasks-LATEST</maven.site.path>
     <checkstyle.violation.ignore>LineLength,MagicNumber</checkstyle.violation.ignore>
-    <project.build.outputTimestamp>2024-05-21T11:08:52Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-12-04T10:56:07Z</project.build.outputTimestamp>
   </properties>
 
   <dependencyManagement>
@@ -150,7 +150,7 @@
       <!-- This shuts off annoying warnings from slf4j-api -->
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-nop</artifactId>
-      <version>1.7.36</version>
+      <version>2.0.16</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
