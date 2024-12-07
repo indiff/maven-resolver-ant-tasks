@@ -20,6 +20,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+        time: "14:57"
+        timezone: "UST"
+    versioning-strategy: increase
     ignore:
       # Ignore Maven Core updates
       - dependency-name: "org.apache.maven:*"
