@@ -20,13 +20,17 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-        time: "14:57"
-        timezone: "UST"
+      time: "07:05"  # 对应中国时区 15:00
+      timezone: "Asia/Shanghai"
     versioning-strategy: increase
     ignore:
-      # Ignore Maven Core updates
       - dependency-name: "org.apache.maven:*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
+      time: "08:05"  # 对应中国时区 15:00
+      timezone: "Asia/Shanghai"
+    versioning-strategy: increase
+    ignore:
+      - dependency-name: "org.apache.maven:*"
