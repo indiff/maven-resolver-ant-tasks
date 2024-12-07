@@ -20,7 +20,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "07:16"  # 对应中国时区 15:00
+      time: "07:18"  # 对应中国时区 15:00
       timezone: "Asia/Shanghai"
     versioning-strategy: increase
     ignore:
@@ -29,7 +29,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "08:17"  # 对应中国时区 15:00
+      time: "08:18"  # 对应中国时区 15:00
       timezone: "Asia/Shanghai"
     versioning-strategy: increase
     ignore:
