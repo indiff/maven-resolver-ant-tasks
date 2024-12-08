@@ -19,11 +19,11 @@ updates:
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
-      #interval: "daily"
-      interval: "weekly"
+      interval: "daily"
+      #interval: "weekly"
       # Check for npm updates on Sundays
-      day: "saturday"
-      time: "00:57"  # 对应中国时区 15:00
+      #day: "saturday"
+      time: "00:59"  # 对应中国时区 15:00
       timezone: "Asia/Shanghai"
     versioning-strategy: increase
     ignore:
