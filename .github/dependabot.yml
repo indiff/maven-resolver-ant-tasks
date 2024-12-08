@@ -20,13 +20,18 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    versioning-strategy: increase
+      time: "01:21"  # 对应中国时区 15:00
+      timezone: "Asia/Shanghai"
+    # /A indicates that the package manager does not yet support configuring the versioning-strategy parameter. 
+    #versioning-strategy: increase
     ignore:
       - dependency-name: "org.apache.maven:*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
-    versioning-strategy: increase
+      time: "01:22"  # 对应中国时区 15:00
+      timezone: "Asia/Shanghai"
+    #versioning-strategy: increase
     ignore:
       - dependency-name: "org.apache.maven:*"
