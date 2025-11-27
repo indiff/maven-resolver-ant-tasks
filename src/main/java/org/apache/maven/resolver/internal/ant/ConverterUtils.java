@@ -82,6 +82,16 @@ class ConverterUtils {
 
     public static org.eclipse.aether.graph.Dependency toDependency(
             Dependency dependency, List<Exclusion> exclusions, RepositorySystemSession session) {
+        String scope = dependency.getScope();
+        return new org.eclipse.aether.graph.Dependency(
+                toArtifact(dependency, session.getArtifactTypeRegistry()),
+                scope == null || scope.trim().isEmpty() ? "compile" : scope,
+                false,
+                toExclusions(dependency.getExclusions(), exclusions));
+    }
+
+    public static org.eclipse.aether.graph.Dependency toManagedDependency(
+            Dependency dependency, List<Exclusion> exclusions, RepositorySystemSession session) {
         return new org.eclipse.aether.graph.Dependency(
                 toArtifact(dependency, session.getArtifactTypeRegistry()),
                 dependency.getScope(),

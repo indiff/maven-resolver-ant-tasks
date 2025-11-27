@@ -21,7 +21,10 @@ package org.apache.maven.resolver.internal.ant;
 import java.io.File;
 import java.io.PrintStream;
 
-import org.apache.tools.ant.*;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.BuildFileRule;
+import org.apache.tools.ant.DefaultLogger;
+import org.apache.tools.ant.Project;
 import org.eclipse.aether.internal.test.util.TestFileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -34,12 +37,23 @@ public abstract class AntBuildsTest {
     private static final File BASE_DIR;
 
     protected static final File BUILD_DIR;
+    protected File buildFile;
 
     static {
         System.setProperty("aether.metadataResolver.threads", "1");
         System.setProperty("aether.connector.basic.threads", "1");
         BASE_DIR = new File("").getAbsoluteFile();
         BUILD_DIR = new File(BASE_DIR, "target/ant");
+    }
+
+    public AntBuildsTest() {
+        projectDir = new File(new File(BASE_DIR, "src/test/resources/ant"), getProjectDirName());
+        buildFile = new File(projectDir, "ant.xml");
+    }
+
+    public AntBuildsTest(File projectFile) {
+        projectDir = projectFile.getParentFile();
+        buildFile = projectFile;
     }
 
     @Rule
@@ -67,7 +81,6 @@ public abstract class AntBuildsTest {
     public void setUp() throws Exception {
         TestFileUtils.deleteFile(BUILD_DIR);
 
-        projectDir = new File(new File(BASE_DIR, "src/test/resources/ant"), getProjectDirName());
         localRepoDir = new File(BUILD_DIR, "local-repo");
         distRepoDir = new File(BUILD_DIR, "dist-repo");
 
@@ -77,7 +90,7 @@ public abstract class AntBuildsTest {
         System.setProperty("project.distrepo.url", distRepoDir.toURI().toASCIIString());
         setUpProperties();
 
-        configureProject(new File(projectDir, "ant.xml").getAbsolutePath(), Project.MSG_VERBOSE);
+        configureProject(buildFile.getAbsolutePath(), Project.MSG_VERBOSE);
     }
 
     @After

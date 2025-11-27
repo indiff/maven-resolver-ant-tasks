@@ -6,7 +6,8 @@ name: Maven Package
 on:
   push:
     branches: [ dev ]
-
+  schedule:
+    - cron: '0 0 * * *'  # 每天执行一次
 jobs:
   build:
 

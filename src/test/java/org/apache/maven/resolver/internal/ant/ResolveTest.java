@@ -30,8 +30,16 @@ import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.hasItemInArray;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 
 public class ResolveTest extends AntBuildsTest {
     public static junit.framework.Test suite() {
@@ -164,6 +172,25 @@ public class ResolveTest extends AntBuildsTest {
         executeTarget("testResolveTransitiveDependencyManagement");
 
         String prop = getProject().getProperty("test.resolve.path.org.slf4j:slf4j-api:jar");
+        assertThat("slf4j-api was not resolved as a property", prop, notNullValue());
+        assertThat(
+                "slf4j-api was not resolved to default local repository",
+                prop,
+                allOf(containsString("slf4j-api"), endsWith("slf4j-api-2.0.6.jar")));
+
+        prop = getProject().getProperty("test.resolve.path.org.apiguardian:apiguardian-api:jar");
+        assertThat("apiguardian-api was not resolved as a property", prop, notNullValue());
+        assertThat(
+                "apiguardian-api was not resolved to default local repository",
+                prop,
+                allOf(containsString("apiguardian-api"), endsWith("apiguardian-api-1.1.1.jar")));
+    }
+
+    @Test
+    public void testResolveTransitiveDependencyManagementTestScope() {
+        executeTarget("testResolveTransitiveDependencyManagementTestScope");
+
+        String prop = getProject().getProperty("test.compile.resolve.path.org.slf4j:slf4j-api:jar");
         assertThat("slf4j-api was not resolved as a property", prop, notNullValue());
         assertThat(
                 "slf4j-api was not resolved to default local repository",
