@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.maven</groupId>
     <artifactId>maven-parent</artifactId>
-    <version>45</version>
+    <version>47</version>
   </parent>
 
   <groupId>org.apache.maven.resolver</groupId>
@@ -58,9 +58,9 @@
   </distributionManagement>
 
   <properties>
-    <mavenVersion>3.9.11</mavenVersion>
-    <resolverVersion>1.9.24</resolverVersion>
-    <antVersion>1.10.15</antVersion>
+    <mavenVersion>3.9.15</mavenVersion>
+    <resolverVersion>1.9.27</resolverVersion>
+    <antVersion>1.10.17</antVersion>
     <javaVersion>8</javaVersion>
     <junitVersion>4.13.2</junitVersion>
     <hamcrestVersion>3.0</hamcrestVersion>
@@ -74,7 +74,7 @@
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
         <artifactId>plexus-utils</artifactId>
-        <version>3.6.0</version>
+        <version>3.6.1</version>
       </dependency>
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
