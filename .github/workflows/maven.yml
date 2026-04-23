@@ -46,5 +46,58 @@ jobs:
           path: |
             ./target/*.jar
 
+    - name: Publish release
+      run: |
+        set -xe
+        sudo apt-get install \
+          zip \
+          unzip
+        source version.env
+        sudo timedatectl set-timezone Asia/Shanghai
+        export build_timestamp="$(date +'%Y%m%d_%H%M')"
+        echo -e "> Automated release OpenSSH_${OPENSSHVER} with OpenSSL_${OPENSSLVER}.\n" > ${{ github.workspace }}/RELEASE.md
+        cat <<'EOF' >> ${{ github.workspace }}/RELEASE.md
+        # Proxy download:
+        ```bash
+        curl -#Lo openssh-indiff.zip "https://ghproxy.it/https://github.com/indiff/openssh-deb/releases/download/OpenSSH_shitver_shitstamp/openssh_resolute_26.04_shitstamp.x86_64.zip"
+        ```
+          
+        # Direct download:
+        ```bash         
+        curl -#Lo openssh-indiff.zip "https://github.com/indiff/openssh-rpms/releases/download/OpenSSH_shitver_shitstamp/openssh_resolute_26.04_shitstamp.x86_64.zip"
+        ```
+
+        ```
+        ls -l *.deb
+        sudo dpkg -i *.deb
+        ```
+        ```
+        cat << 'EOF' > /etc/ssh/sshd_config
+        Port 22
+        AddressFamily inet
+        PubkeyAcceptedAlgorithms +ssh-rsa
+        PermitRootLogin yes
+        PasswordAuthentication yes
+        UseDNS no
+        UsePAM yes
+        TCPKeepAlive yes
+        ClientAliveInterval 60
+        ClientAliveCountMax 3
+        #Subsystem sftp  internal-sftp
+        Subsystem sftp  /usr/libexec/openssh/sftp-server
+        KexAlgorithms -diffie-hellman-group1-sha1,diffie-hellman-group1-sha256,diffie-hellman-group14-sha1,diffie-hellman-group14-sha256,diffie-hellman-group15-sha256,diffie-hellman-group15-sha512,diffie-hellman-group16-sha256,diffie-hellman-group16-sha512,diffie-hellman-group17-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha1,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha512
+        shitshit
+        ```
+        EOF
+        sed -i "s/shitver/${OPENSSHVER}/g" RELEASE.md
+        sed -i "s/shitstamp/${build_timestamp}/g" RELEASE.md
+        sed -i 's/shitshit/EOF/g' RELEASE.md
+        GITHUB_REF=${{ github.ref }}
+        TAGNAME="maven-resolver-ant-tasks_${build_timestamp}"
+        NAME="${TAGNAME}"
+        git tag -l --format='%(contents)' "${TAGNAME}" | tee -a ${{ github.workspace }}/RELEASE.md
+        gh release delete --cleanup-tag --yes "$TAGNAME" || true
+        gh release create "$TAGNAME" --target "master" -F ${{ github.workspace }}/RELEASE.md --title "$NAME" ./target/*.jar
+
     - name: Check Version with Maven
       run: mvn -U -B -T 1C versions:display-dependency-updates "-Dmaven.version.ignore=.*android.*" -Dmaven.test.skip=true -Dmaven.compile.fork=true --file pom.xml
