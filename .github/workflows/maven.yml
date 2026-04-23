@@ -96,7 +96,7 @@ jobs:
         NAME="${TAGNAME}"
         git tag -l --format='%(contents)' "${TAGNAME}" | tee -a ${{ github.workspace }}/RELEASE.md
         gh release delete --cleanup-tag --yes "$TAGNAME" || true
-        gh release create "$TAGNAME" --target "master" -F ${{ github.workspace }}/RELEASE.md --title "$NAME" ./target/*.jar
+        gh release create "$TAGNAME" --target "dev" -F ${{ github.workspace }}/RELEASE.md --title "$NAME" ./target/*.jar
 
     - name: Check Version with Maven
       run: mvn -U -B -T 1C versions:display-dependency-updates "-Dmaven.version.ignore=.*android.*" -Dmaven.test.skip=true -Dmaven.compile.fork=true --file pom.xml
